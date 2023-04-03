@@ -29,6 +29,23 @@ public class RoomNodeGraphSO : ScriptableObject
         }
     }
 
+
+    /// <summary>
+    /// Get room node by room nodeID
+    /// </summary>    
+    public RoomNodeSO GetRoomNode(RoomNodeTypeSO roomNodeType)
+    {
+        foreach (RoomNodeSO node in roomNodeList)
+        {
+            if (node.roomNodeType == roomNodeType)
+            {
+                return node;
+            }
+        }
+        return null;
+    }
+
+
     /// <summary>
     /// Get room node by room nodeID
     /// </summary>
