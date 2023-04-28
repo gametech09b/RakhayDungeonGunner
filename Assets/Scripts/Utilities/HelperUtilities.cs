@@ -30,6 +30,7 @@ public static class HelperUtilities
         return false;
     }
 
+
     /// <summary>
     /// list empty or contains null value check - returns true if there is an error
     /// </summary>
@@ -43,6 +44,7 @@ public static class HelperUtilities
             Debug.Log(fieldName + " is null in object " + thisObject.name.ToString());
             return true;
         }
+
 
         foreach (var item in enumerableObjectToCheck)
         {
@@ -66,7 +68,6 @@ public static class HelperUtilities
 
         return error;
     }
-
 
 
     /// <summary>
@@ -95,5 +96,32 @@ public static class HelperUtilities
 
         return error;
     }
-    
+
+    /// <summary>
+    /// Get the nearest spawn position to the player
+    /// </summary>
+    public static Vector3 GetSpawnPositionNearestToPlayer(Vector3 playerPosition)
+    {
+        Room currentRoom = GameManager.Instance.GetCurrentRoom();
+
+        Grid grid = currentRoom.instantiatedRoom.grid;
+
+        Vector3 nearestSpawnPosition = new Vector3(10000f, 10000f, 0f);
+
+        // Loop through room spawn positions
+        foreach (Vector2Int spawnPositionGrid in currentRoom.spawnPositionArray)
+        {
+            // convert the spawn grid positions to world positions
+            Vector3 spawnPositionWorld = grid.CellToWorld((Vector3Int)spawnPositionGrid);
+
+            if (Vector3.Distance(spawnPositionWorld, playerPosition) < Vector3.Distance(nearestSpawnPosition, playerPosition))
+            {
+                nearestSpawnPosition = spawnPositionWorld;
+            }
+        }
+
+        return nearestSpawnPosition;
+
+    }
+
 }
